@@ -1,0 +1,17 @@
+﻿Already up to date.
+git : git: 'credential-manager-core' is not a git command. See 'git --help'.
+At line:1 char:2
++  git push -u origin main 2>&1 | Out-File -Append $log -Encoding utf8
++  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (git: 'credentia...e 'git --help'. 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+To https://github.com/meetkothariii0/CalbyAI.git
+ ! [rejected]        main -> main (non-fast-forward)
+error: failed to push some refs to 
+'https://github.com/meetkothariii0/CalbyAI.git'
+hint: Updates were rejected because a pushed branch tip is behind its remote
+hint: counterpart. If you want to integrate the remote changes, use 'git pull'
+hint: before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.

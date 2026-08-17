@@ -1,0 +1,21 @@
+﻿HEAD
+ff557f0 (main) Fix alias matching; add alias tests; --render CLI; diagnostics
+976605d (origin/master) Replace approach.md with comprehensive first-person design scaffold
+4cefecb Document --render flag in README
+80b6c14 Update knowledge graph snapshot after entity-linking fix
+4159570 Fix test isolation: restore graph in tearDown instead of deleting; increase engine timeout to 30s; fix stale integration test fixture
+a5ab8ab Add regression test harness and alias diagnostic script
+28fef46 Fix entity-linking substring collision bug (word-boundary matching for short aliases); remove bytecode from tracking
+5530ad0 feat(cli): --render flag; tests: add alias resolution tests; fix alias matching
+27b266c chore: add alias resolution tests
+45127dc (HEAD, origin/main, origin/HEAD) Initial commit
+ff557f0eed336be975abd06038d6d1c8f32fbb05 refs/heads/main
+* remote origin
+  Fetch URL: https://github.com/meetkothariii0/CalbyAI.git
+  Push  URL: https://github.com/meetkothariii0/CalbyAI.git
+  HEAD branch: main
+  Remote branches:
+    main   tracked
+    master tracked
+  Local ref configured for 'git push':
+    main pushes to main (local out of date)
