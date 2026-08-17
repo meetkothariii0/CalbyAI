@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "KnowledgeGraph",
+  "type": "object",
+  "required": ["nodes", "edges"],
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type"],
+        "properties": {
+          "id": {"type": "string"},
+          "type": {"type": "string", "enum": ["College", "Course", "Comment"]},
+          "name": {"type": "string"},
+          "aliases": {"type": "array", "items": {"type": "string"}},
+          "college": {"type": "string"},
+          "average_package": {"type": ["number", "null"]},
+          "fees": {"type": ["number", "null"]},
+          "roi": {"type": ["number", "null"]},
+          "sources": {"type": "array", "items": {"type": "string"}},
+          "data_availability": {"type": "string"},
+          "body": {"type": "string"},
+          "polarity": {"type": "number"},
+          "credibility": {"type": "number"},
+          "permalink": {"type": "string"}
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["u", "v", "type"],
+        "properties": {
+          "u": {"type": "string"},
+          "v": {"type": "string"},
+          "type": {"type": "string", "enum": ["offers_course", "discusses"]}
+        }
+      }
+    }
+  }
+}

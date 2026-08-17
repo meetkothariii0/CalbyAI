@@ -1,0 +1,6 @@
+praw
+networkx
+pandas
+python-dotenv
+vaderSentiment
+rapidfuzz
