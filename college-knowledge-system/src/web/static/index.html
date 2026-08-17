@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Knowledge System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>College Knowledge System</h1>
+            <p class="subtitle">Evidence-backed answers about Bangalore engineering colleges</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="search-section">
+            <form id="search-form">
+                <input type="text" id="search-input" placeholder="e.g. placements at RVCE" required>
+                <button type="submit" id="search-button">Search</button>
+            </form>
+        </section>
+
+        <section id="loading-indicator" class="hidden">
+            <div class="loading-spinner"></div>
+            <p>Searching...</p>
+        </section>
+
+        <section id="results-container" class="hidden">
+            <!-- Results will be injected here -->
+        </section>
+
+        <section id="no-data-container" class="hidden">
+            <div class="no-data">
+                <p>No matching colleges found. Try a specific college name like RVCE, PESU, or BMSCE.</p>
+            </div>
+        </section>
+
+        <section id="error-container" class="hidden">
+            <div class="no-data">
+                <p id="error-message">An error occurred. Please try again.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
