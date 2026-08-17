@@ -88,7 +88,8 @@ def _simple_extract_colleges(text: str, graph) -> List[str]:
             short = ''.join(ch for ch in name if ch.isalnum()).lower()
             aliases.add(short)
             initials = ''.join([p[0] for p in re.split(r"\W+", name) if p])
-            if initials:
+            # avoid single-letter initials (they are too noisy and match many words)
+            if initials and len(initials) > 1:
                 aliases.add(initials.lower())
             # add cumulative joins of first few words (e.g., 'rvcollege')
             words = [p for p in re.split(r"\W+", name) if p]
@@ -101,7 +102,19 @@ def _simple_extract_colleges(text: str, graph) -> List[str]:
     # exact / alias matching
     norm_text = ''.join(ch for ch in text if ch.isalnum()).lower()
     for a, fullname in alias_map.items():
-        if a in lower or a in norm_text:
+        # skip overly short alias keys (single-letter) — they were filtered earlier,
+        # but double-check here to be safe
+        if len(a) <= 1:
+            continue
+        # prefer whole-word matches in the original lowercased text
+        try:
+            if re.search(r"\b" + re.escape(a) + r"\b", lower):
+                names.append(fullname)
+                continue
+        except Exception:
+            pass
+        # fallback: allow matching against the normalized alphanumeric text (only for longer, distinct aliases)
+        if len(a) >= 4 and a in norm_text:
             names.append(fullname)
 
     if names:
