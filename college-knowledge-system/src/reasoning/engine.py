@@ -181,9 +181,9 @@ def answer(query_type: str, **kwargs) -> Dict[str, Any]:
     import threading
     thread = threading.Thread(target=_worker, daemon=True)
     thread.start()
-    thread.join(10.0)  # 10 second timeout for graph traversal
+    thread.join(30.0)  # 30 second timeout for graph traversal
     if thread.is_alive():
-        return {'error': 'timeout', 'message': 'query processing exceeded 10s timeout'}
+        return {'error': 'timeout', 'message': 'query processing exceeded 30s timeout'}
     res = result_container.get('res', {'error': 'no_result'})
 
     if use_cache:

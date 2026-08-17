@@ -12,7 +12,12 @@ class CacheLifecycleTests(unittest.TestCase):
         self.data_dir = Path(__file__).resolve().parents[1] / 'data'
         graph_dir = self.data_dir / 'graph'
         graph_dir.mkdir(parents=True, exist_ok=True)
-        # create minimal graph
+        # Save original graph so tearDown can restore it
+        self._graph_file = graph_dir / 'knowledge_graph.json'
+        self._original_graph = None
+        if self._graph_file.exists():
+            self._original_graph = self._graph_file.read_bytes()
+        # Write minimal test graph
         nodes = [
             {'id': 'college::A', 'type': 'College', 'name': 'A', 'aliases': ['A']},
             {'id': 'comment::c1', 'type': 'Comment', 'body': 'good', 'polarity': 0.5},
@@ -20,7 +25,7 @@ class CacheLifecycleTests(unittest.TestCase):
         edges = [
             {'u': 'comment::c1', 'v': 'college::A', 'type': 'discusses'}
         ]
-        with open(graph_dir / 'knowledge_graph.json', 'w', encoding='utf8') as fh:
+        with open(self._graph_file, 'w', encoding='utf8') as fh:
             json.dump({'nodes': nodes, 'edges': edges}, fh)
         # remove cache
         cache_file = self.data_dir / 'processed' / 'query_cache.json'
@@ -31,9 +36,12 @@ class CacheLifecycleTests(unittest.TestCase):
         cache_file = self.data_dir / 'processed' / 'query_cache.json'
         if cache_file.exists():
             os.remove(cache_file)
-        graph_file = self.data_dir / 'graph' / 'knowledge_graph.json'
-        if graph_file.exists():
-            os.remove(graph_file)
+        # Restore the original graph file instead of deleting it,
+        # so subsequent tests that need the real graph are not broken.
+        if self._original_graph is not None:
+            self._graph_file.write_bytes(self._original_graph)
+        elif self._graph_file.exists():
+            os.remove(self._graph_file)
 
     def test_cache_lifecycle(self):
         # first call should compute and cache
