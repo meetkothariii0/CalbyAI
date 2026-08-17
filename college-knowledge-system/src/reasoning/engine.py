@@ -90,13 +90,18 @@ def _simple_extract_colleges(text: str, graph) -> List[str]:
             initials = ''.join([p[0] for p in re.split(r"\W+", name) if p])
             if initials:
                 aliases.add(initials.lower())
+            # add cumulative joins of first few words (e.g., 'rvcollege')
+            words = [p for p in re.split(r"\W+", name) if p]
+            for k in range(1, min(4, len(words) + 1)):
+                aliases.add(''.join(words[:k]).lower())
             for a in list(aliases):
                 if a:
                     alias_map[a.lower()] = name
 
     # exact / alias matching
+    norm_text = ''.join(ch for ch in text if ch.isalnum()).lower()
     for a, fullname in alias_map.items():
-        if a in lower:
+        if a in lower or a in norm_text:
             names.append(fullname)
 
     if names:

@@ -16,10 +16,12 @@ def main(argv=None):
     p_rank.add_argument("--category")
     p_rank.add_argument("--preferred_courses", nargs="*", default=[])
     p_rank.add_argument("--no-cache", action="store_true")
+    p_rank.add_argument("--render", action="store_true", help="Also print human-readable excerpts")
 
     p_sit = sub.add_parser("situation")
     p_sit.add_argument("--text")
     p_sit.add_argument("--no-cache", action="store_true")
+    p_sit.add_argument("--render", action="store_true", help="Also print human-readable excerpts")
 
     args = parser.parse_args(argv)
 
@@ -63,6 +65,18 @@ def main(argv=None):
         sys.exit(2)
 
     print(json.dumps(result, indent=2, ensure_ascii=False))
+
+    # Optionally print a human-friendly render with excerpts
+    try:
+        if getattr(args, 'render', False):
+            from src.graph.build_graph import load_graph
+            graph = load_graph(graph_file)
+            rendered = engine.render_with_excerpts(result, graph)
+            print('\n--- Human-readable render ---\n')
+            print(rendered)
+    except Exception:
+        # Don't fail the CLI if rendering fails; JSON already printed
+        pass
 
 
 if __name__ == "__main__":
